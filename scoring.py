@@ -17,7 +17,7 @@ from skin_type_loader import df_types
 # ---------------------------------------------------
 # 1) 고민 → 효능 매핑용 엑셀 로딩
 # ---------------------------------------------------
-SKIN_CONCERN_FILE = Path("skin_concerns_canon.xlsx")
+SKIN_CONCERN_FILE = Path("data/skin_concerns_canon.xlsx")
 df_concern_map = pd.read_excel(SKIN_CONCERN_FILE)
 
 def build_concern_map(df):
