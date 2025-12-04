@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer, util
 # -----------------------------
 model = SentenceTransformer("snunlp/KR-SBERT-V40K-klueNLI-augSTS")
 
-df_ingredients = pd.read_excel("final_ingredients_dataset_canon_filled_2.xlsx")
+df_ingredients = pd.read_excel("data/final_ingredients_dataset_canon_filled_2.xlsx")
 
 # 성분명 전처리
 df_ingredients['성분명'] = (
