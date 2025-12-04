@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>분석 중...</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .loading-title {
+            font-size:18px; 
+            font-weight:700; 
+            text-align:center;
+            margin-bottom:14px;
+        }
+
+        /* 🌟 중앙정렬용 박스 */
+        .center-box {
+            text-align:center;
+            width:100%;
+        }
+
+        .loading-sub {
+            font-size:14px;
+            margin-bottom:8px;
+        }
+
+        .loading-small {
+            font-size:12px;
+            color:#777;
+            margin-top:4px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="loading-title">잠시만 기다려주세요🙏</div>
+
+    <!-- 🌟 두 문장을 같은 센터 박스 안에 넣어 중앙축 일치 -->
+    <div class="center-box">
+        <div class="loading-sub" id="nicknameText"></div>
+        <div class="loading-small">*최대 2분까지 걸릴 수 있어요</div>
+    </div>
+
+    <button class="btn-yellow" onclick="goHome()">처음으로 돌아가기</button>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const nickname = params.get("nickname") || "고객";
+    const type = params.get("type");
+    const concern = params.get("concern");
+    const ingredients = params.get("ingredients");
+
+    document.getElementById("nicknameText").innerHTML =
+        `${nickname}님 피부에 얼마나 잘 맞을지,<br>지금 꼼꼼하게 확인하고 있어요!`;
+
+    async function runAnalysis() {
+        try {
+            const response = await fetch("/analyze", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    review: concern,
+                    ingredients: ingredients,
+                    skin_type: type
+                })
+            });
+
+            const result = await response.json();
+
+            const score = encodeURIComponent(result["최종점수"] ?? 0);
+            const skinType = encodeURIComponent(result["피부타입"] ?? "-");
+            const predicted = encodeURIComponent(result["예측고민"] ?? "-");
+
+            let guideQuery = "";
+            (result["성분가이드"] || []).forEach(g => {
+                guideQuery += `&guide=${encodeURIComponent(JSON.stringify(g))}`;
+            });
+
+            const url =
+                `/static/result.html?nickname=${encodeURIComponent(nickname)}`
+                + `&score=${score}`
+                + `&skinType=${skinType}`
+                + `&predicted=${predicted}`
+                + guideQuery;
+
+            window.location.href = url;
+
+        } catch (e) {
+            alert("분석 중 오류가 발생했습니다.");
+            console.error(e);
+        }
+    }
+
+    runAnalysis();
+
+    function goHome() { window.location.href = "/"; }
+</script>
+
+</body>
+</html>

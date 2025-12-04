@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>분석 결과</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .result-title-main { font-size: 18px; font-weight:700; margin-bottom:22px; }
+        .result-line { font-size:16px; font-weight:700; margin-bottom:14px; }
+        .result-sub { font-size:14px; font-weight:700; margin-bottom:8px; }
+        .warn-item { font-size:12px; font-weight:700; margin-bottom:6px; }
+        .red-ingredient { color:#d9534f; font-size:12px; font-weight:700; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="result-title-main">분석 결과</div>
+
+    <div class="result-line" id="matchText"></div>
+
+    <br>
+
+    <div class="result-sub" id="typeText"></div>
+    <div class="result-sub" id="concernText"></div>
+
+    <br><br>
+
+    <div class="result-sub">확인 필요한 성분</div>
+    <div id="guideList"></div>
+
+    <button class="btn-yellow" onclick="goHome()">처음으로</button>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    const nickname = params.get("nickname") || "고객";
+    const score = params.get("score") || "0";
+    const skinType = params.get("skinType") || "-";
+    const predicted = params.get("predicted") || "-";
+    const guides = params.getAll("guide") ?? [];
+
+    document.getElementById("matchText").innerHTML =
+        `${nickname}님의 피부와 ${score}% 잘 맞아요 :)`;
+
+    document.getElementById("typeText").innerHTML =
+        `${nickname}님의 피부 타입: ${skinType}`;
+
+    document.getElementById("concernText").innerHTML =
+        `${nickname}님의 피부 고민: ${predicted}`;
+
+    let out = "";
+    if (!guides.length) {
+        out = `<div style="font-size:13px; color:#777;">확인 필요한 성분이 없어요!</div>`;
+    } else {
+        guides.forEach(g => {
+            const item = JSON.parse(g);
+            out += `
+                <div class="warn-item">
+                    <span class="red-ingredient">❗ ${item["성분"]}</span>
+                    <span style="color:black;"> → ${item["가이드"]}</span>
+                </div>`;
+        });
+    }
+
+    document.getElementById("guideList").innerHTML = out;
+
+    function goHome() { window.location.href = "/"; }
+</script>
+
+</body>
+</html>

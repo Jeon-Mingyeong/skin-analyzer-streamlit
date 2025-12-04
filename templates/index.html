@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>피부 타입 분석</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #fafafa;
+            margin:0; padding:0;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 480px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 14px;
+            padding: 30px 26px;
+            box-shadow: 0px 4px 14px rgba(0,0,0,0.08);
+        }
+
+        /* 상단 텍스트 */
+        .subtitle {
+            font-size: 12.5px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .title {
+            font-size: 16px; 
+            font-weight: 700; 
+            line-height: 1.4;
+            margin-bottom: 22px;
+        }
+
+        /* 라벨 */
+        label.section-label {
+            font-size: 12px;
+            font-weight: 700; 
+            margin-top: 14px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* 입력 필드 공통 */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 10.5px;
+            border: 1.5px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Noto Sans KR';
+        }
+
+        textarea { 
+            resize: none; 
+            height: 95px;
+            line-height: 1.45; 
+        }
+
+        /* placeholder 스타일 */
+        input::placeholder,
+        textarea::placeholder {
+            color: #bfbfbf;
+            font-size: 10.5px;
+            opacity: 1;
+        }
+
+        /* 버튼 */
+        .btn-yellow {
+            margin-top: 26px;
+            width: 100%;
+            background: rgb(227,223,53);
+            padding: 15px 0;
+            border-radius: 10px;
+            font-size: 16px;   /* 정민 요청 반영 */
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-yellow:hover {
+            background: rgb(210,206,50);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="subtitle">이 제품 내 피부에게 최선일까? 🤔</div>
+    <div class="title">피부 타입과 고민을 기반으로<br>진단해 드려요!</div>
+
+    <!-- 닉네임 -->
+    <label class="section-label">닉네임</label>
+    <input type="text" id="nickname" placeholder="ex. 김슈니">
+
+    <!-- 피부 타입 -->
+    <label class="section-label">피부 타입</label>
+    <select id="skin_type">
+        <option value="1">지성</option>
+        <option value="2">복합성</option>
+        <option value="3">건성</option>
+        <option value="4">민감성</option>
+    </select>
+
+    <!-- 고민 -->
+    <label class="section-label">피부 고민</label>
+    <textarea id="concern" placeholder="피부 고민을 자유롭게 입력해 주세요!&#10;ex. 하루 종일 푸석거려요, 세로모공 고민이에요 등"></textarea>
+
+    <!-- 전성분 -->
+    <label class="section-label">전성분 목록</label>
+    <textarea id="ingredients" placeholder="구매한 제품의 전성분 목록을 복사해 붙여주세요!&#10;(상품설명 제품고시 → 화장품 성분에 따라 기재해야 하는 모든 성분)&#10;&#10;ex. 정제수, 글리세린, 토코페롤..."></textarea>
+
+    <!-- 버튼 -->
+    <button class="btn-yellow" onclick="goAnalyze()">적합도 알아보기</button>
+</div>
+
+<script>
+function goAnalyze() {
+    const nickname = document.getElementById("nickname").value || "고객";
+    const type = document.getElementById("skin_type").value;
+    const concern = document.getElementById("concern").value;
+    const ingredients = document.getElementById("ingredients").value;
+
+    if (!concern || !ingredients) {
+        alert("피부 고민과 전성분을 모두 입력해주세요!");
+        return;
+    }
+
+    const url = "/static/analyze.html"
+        + "?nickname=" + encodeURIComponent(nickname)
+        + "&type=" + encodeURIComponent(type)
+        + "&concern=" + encodeURIComponent(concern)
+        + "&ingredients=" + encodeURIComponent(ingredients);
+
+    window.location.href = url;
+}
+</script>
+
+</body>
+</html>

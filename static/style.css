@@ -1,0 +1,80 @@
+body { 
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #fafafa; 
+    margin:0; 
+    padding:0; 
+}
+
+/* 공통 컨테이너 */
+.container {
+    width:95%; 
+    max-width:480px; 
+    margin:40px auto; 
+    background:white; 
+    border-radius:14px; 
+    padding:30px 26px; 
+    box-shadow:0px 4px 14px rgba(0,0,0,0.08); 
+}
+
+/* 버튼 (라임색) */
+.btn-yellow { 
+    margin-top:26px; 
+    width:100%; 
+    background:rgb(227,223,53); /* ✔ 라임색 (정민 요청) */
+    padding:15px 0; 
+    border-radius:10px; 
+    font-size:16px; 
+    font-weight:700; 
+    border:none; 
+    cursor:pointer;
+}
+
+.btn-yellow:hover { 
+    background:rgb(210,206,50); /* hover 시 조금 더 어두운 라임 */
+}
+
+/* 로딩 화면 텍스트 */
+.loading-title { 
+    font-size:18px;
+    font-weight:700; 
+    margin-bottom:10px; 
+}
+
+.loading-sub { 
+    font-size:14px; 
+    margin-bottom:5px; 
+    text-align:center; 
+}
+
+.loading-small { 
+    font-size:12px; 
+    color:#777; 
+    margin-top:4px; 
+}
+
+/* 결과 화면 텍스트 */
+.result-title-main { 
+    font-size: 18px; 
+    font-weight:700; 
+    margin-bottom:22px; 
+}
+
+.result-line { 
+    font-size:16px; 
+    font-weight:700; 
+    margin-bottom:14px; 
+}
+
+.result-sub { 
+    font-size:14px; 
+    font-weight:700; 
+    margin-bottom:8px; 
+}
+
+/* 성분 경고 */
+.warn-item { 
+    font-size:12px; 
+    font-weight:700; 
+    color:#d9534f; 
+    margin-bottom:6px; 
+}
