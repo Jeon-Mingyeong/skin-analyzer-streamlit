@@ -62,7 +62,7 @@ def ask_llm(prompt: str, max_new_tokens=70):
 # ==========================================
 # 3) DB1 로딩
 # ==========================================
-df = pd.read_excel("skin_concerns_canon.xlsx")
+df = pd.read_excel("data/skin_concerns_canon.xlsx")
 
 text_col = "소비자 언어 (리뷰)"
 label_col = "피부고민"
